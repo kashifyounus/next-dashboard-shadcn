@@ -1,31 +1,26 @@
+"use client"
 import {
   AlertCircle,
   Archive,
   ArchiveX,
   Bird,
-  Book,
-  Bot,
   CircleUser,
-  Code2,
   CornerDownLeft,
   Inbox,
-  LifeBuoy,
   MessagesSquare,
   Mic,
   Paperclip,
   Rabbit,
   Search,
+  Send,
   Settings,
-  Settings2,
-  Share,
   ShoppingCart,
-  SquareTerminal,
-  SquareUser,
   Trash2,
-  Triangle,
   Turtle,
+  Users2
 } from "lucide-react";
 
+import { ModeToggle } from "@/components/ModeToggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,22 +31,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -60,10 +39,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ModeToggle } from "@/components/ModeToggle";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { TabsList } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import React from "react";
+import { Nav } from "./nav";
 
 export const description =
   "An AI playground with a sidebar navigation and a main content area. The playground has a header with a settings drawer and a share button. The sidebar has navigation links and a user menu. The main content area shows a form to configure the model and messages.";
@@ -103,7 +100,7 @@ export default function DashboardPage({
               collapsible={true}
               minSize={15}
               maxSize={20}
-              onCollapse={(collapsed) => {
+              onCollapse={(collapsed : boolean) => {
                 setIsCollapsed(collapsed);
                 document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
                   collapsed
@@ -120,10 +117,10 @@ export default function DashboardPage({
                   isCollapsed ? "h-[52px]" : "px-2"
                 )}
               >
-                <AccountSwitcher
+                {/* <AccountSwitcher
                   isCollapsed={isCollapsed}
                   accounts={accounts}
-                />
+                /> */}
               </div>
               <Separator />
               <Nav
@@ -134,12 +131,6 @@ export default function DashboardPage({
                     label: "128",
                     icon: Inbox,
                     variant: "default",
-                  },
-                  {
-                    title: "Drafts",
-                    label: "9",
-                    icon: File,
-                    variant: "ghost",
                   },
                   {
                     title: "Sent",
@@ -205,48 +196,7 @@ export default function DashboardPage({
               />
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-              <Tabs defaultValue="all">
-                <div className="flex items-center px-4 py-2">
-                  <h1 className="text-xl font-bold">Inbox</h1>
-                  <TabsList className="ml-auto">
-                    <TabsTrigger
-                      value="all"
-                      className="text-zinc-600 dark:text-zinc-200"
-                    >
-                      All mail
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="unread"
-                      className="text-zinc-600 dark:text-zinc-200"
-                    >
-                      Unread
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
-                <Separator />
-                <div className="bg-background/95 p-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                  <form>
-                    <div className="relative">
-                      <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                      <Input placeholder="Search" className="pl-8" />
-                    </div>
-                  </form>
-                </div>
-                <TabsContent value="all" className="m-0">
-                  <MailList items={mails} />
-                </TabsContent>
-                <TabsContent value="unread" className="m-0">
-                  <MailList items={mails.filter((item) => !item.read)} />
-                </TabsContent>
-              </Tabs>
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={defaultLayout[2]}>
-              <MailDisplay
-                mail={mails.find((item) => item.id === mail.selected) || null}
-              />
-            </ResizablePanel>
+            
           </ResizablePanelGroup>
         </TooltipProvider>
       </aside>
