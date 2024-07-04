@@ -1,24 +1,26 @@
+"use client"
 import {
+  AlertCircle,
+  Archive,
+  ArchiveX,
   Bird,
-  Book,
-  Bot,
   CircleUser,
-  Code2,
   CornerDownLeft,
-  LifeBuoy,
+  Inbox,
+  MessagesSquare,
   Mic,
   Paperclip,
   Rabbit,
   Search,
+  Send,
   Settings,
-  Settings2,
-  Share,
-  SquareTerminal,
-  SquareUser,
-  Triangle,
+  ShoppingCart,
+  Trash2,
   Turtle,
+  Users2
 } from "lucide-react";
 
+import { ModeToggle } from "@/components/ModeToggle";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,22 +31,6 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,7 +39,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ModeToggle } from "@/components/ModeToggle";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import React from "react";
+import { Nav } from "./nav";
 
 export const description =
   "An AI playground with a sidebar navigation and a main content area. The playground has a header with a settings drawer and a share button. The sidebar has navigation links and a user menu. The main content area shows a form to configure the model and messages.";
@@ -62,128 +69,136 @@ export const iframeHeight = "740px";
 
 export const containerClassName = "w-full h-full";
 
-export default function DashboardPage() {
+interface Props {
+  defaultLayout: number[] | undefined;
+  defaultCollapsed?: boolean;
+  navCollapsedSize: number;
+}
+
+export default function DashboardPage({
+  defaultLayout = [265, 440, 655],
+  defaultCollapsed = false,
+  navCollapsedSize,
+}: Props) {
+  const [isCollapsed, setIsCollapsed] = React.useState(defaultCollapsed);
   return (
     <div className="grid h-screen w-full pl-[56px]">
       <aside className="inset-y fixed  left-0 z-20 flex h-full flex-col border-r">
-        <div className="border-b p-2">
-          <Button variant="outline" size="icon" aria-label="Home">
-            <Triangle className="size-5 fill-foreground" />
-          </Button>
-        </div>
-        <nav className="grid gap-1 p-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-lg bg-muted"
-                  aria-label="Playground"
-                >
-                  <SquareTerminal className="size-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right" sideOffset={5}>
-                Playground
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-lg"
-                  aria-label="Models"
-                >
-                  <Bot className="size-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right" sideOffset={5}>
-                Models
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-lg"
-                  aria-label="API"
-                >
-                  <Code2 className="size-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right" sideOffset={5}>
-                API
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-lg"
-                  aria-label="Documentation"
-                >
-                  <Book className="size-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right" sideOffset={5}>
-                Documentation
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="rounded-lg"
-                  aria-label="Settings"
-                >
-                  <Settings2 className="size-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right" sideOffset={5}>
-                Settings
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </nav>
-        <nav className="mt-auto grid gap-1 p-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="mt-auto rounded-lg"
-                  aria-label="Help"
-                >
-                  <LifeBuoy className="size-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right" sideOffset={5}>
-                Help
-              </TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="mt-auto rounded-lg"
-                  aria-label="Account"
-                >
-                  <SquareUser className="size-5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="right" sideOffset={5}>
-                Account
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </nav>
+        <TooltipProvider delayDuration={0}>
+          <ResizablePanelGroup
+            direction="horizontal"
+            onLayout={(sizes: number[]) => {
+              document.cookie = `react-resizable-panels:layout=${JSON.stringify(
+                sizes
+              )}`;
+            }}
+            className="h-full max-h-[800px] items-stretch"
+          >
+            <ResizablePanel
+              defaultSize={defaultLayout[0]}
+              collapsedSize={navCollapsedSize}
+              collapsible={true}
+              minSize={15}
+              maxSize={20}
+              onCollapse={(collapsed : boolean) => {
+                setIsCollapsed(collapsed);
+                document.cookie = `react-resizable-panels:collapsed=${JSON.stringify(
+                  collapsed
+                )}`;
+              }}
+              className={cn(
+                isCollapsed &&
+                  "min-w-[50px] transition-all duration-300 ease-in-out"
+              )}
+            >
+              <div
+                className={cn(
+                  "flex h-[52px] items-center justify-center",
+                  isCollapsed ? "h-[52px]" : "px-2"
+                )}
+              >
+                {/* <AccountSwitcher
+                  isCollapsed={isCollapsed}
+                  accounts={accounts}
+                /> */}
+              </div>
+              <Separator />
+              <Nav
+                isCollapsed={isCollapsed}
+                links={[
+                  {
+                    title: "Inbox",
+                    label: "128",
+                    icon: Inbox,
+                    variant: "default",
+                  },
+                  {
+                    title: "Sent",
+                    label: "",
+                    icon: Send,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Junk",
+                    label: "23",
+                    icon: ArchiveX,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Trash",
+                    label: "",
+                    icon: Trash2,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Archive",
+                    label: "",
+                    icon: Archive,
+                    variant: "ghost",
+                  },
+                ]}
+              />
+              <Separator />
+              <Nav
+                isCollapsed={isCollapsed}
+                links={[
+                  {
+                    title: "Social",
+                    label: "972",
+                    icon: Users2,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Updates",
+                    label: "342",
+                    icon: AlertCircle,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Forums",
+                    label: "128",
+                    icon: MessagesSquare,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Shopping",
+                    label: "8",
+                    icon: ShoppingCart,
+                    variant: "ghost",
+                  },
+                  {
+                    title: "Promotions",
+                    label: "21",
+                    icon: Archive,
+                    variant: "ghost",
+                  },
+                ]}
+              />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            
+          </ResizablePanelGroup>
+        </TooltipProvider>
       </aside>
       <div className="flex flex-col">
         <header className="sticky top-0 z-10 flex h-[57px] items-center gap-1 border-b bg-background px-4">
