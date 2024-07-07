@@ -1,20 +1,23 @@
 import { LifeBuoy, SquareUser, Triangle } from "lucide-react";
 
+import { auth } from "@/auth";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { SidebarMenus } from "@/constants/SidebarMenus";
 import Link from "next/link";
 import Nav from "./Nav";
-import { SidebarMenus } from "@/constants/SidebarMenus";
-import { Separator } from "@/components/ui/separator";
+import Avatar from "./avatar";
 
 type Props = {};
 
 const Sidebar = (props: Props) => {
+ 
   return (
     <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r lg:w-[220px]">
       <div className="flex items-center border-b p-2 gap-3">
@@ -25,7 +28,10 @@ const Sidebar = (props: Props) => {
         </div>
         <div className="hidden lg:flex">
           <Link href="/dashboard">
-            <span className="font-bold text-xl">PlayGround</span>
+            <span className="font-bold text-xl">PlayGround </span>
+            <span className="font-bold text-xl">
+              <Avatar />
+            </span>
           </Link>
         </div>
       </div>
