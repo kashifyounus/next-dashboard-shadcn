@@ -17,7 +17,6 @@ import Avatar from "./avatar";
 type Props = {};
 
 const Sidebar = (props: Props) => {
- 
   return (
     <aside className="inset-y fixed left-0 z-20 flex h-full flex-col border-r lg:w-[220px]">
       <div className="flex items-center border-b p-2 gap-3">
@@ -29,15 +28,12 @@ const Sidebar = (props: Props) => {
         <div className="hidden lg:flex">
           <Link href="/dashboard">
             <span className="font-bold text-xl">PlayGround </span>
-            <span className="font-bold text-xl">
-              <Avatar />
-            </span>
           </Link>
         </div>
       </div>
       {/* this nav is for large  view */}
       <div className="hidden lg:grid">
-        <Nav/>
+        <Nav />
       </div>
       {/* this nav is for small view */}
       <nav className="lg:hidden grid gap-3 p-2">

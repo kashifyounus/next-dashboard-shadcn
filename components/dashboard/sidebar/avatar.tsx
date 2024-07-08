@@ -4,11 +4,11 @@ type Props = {};
 
 const Avatar = async (props: Props) => {
   const session = await auth();
-  console.log("session in client", session);
+  console.log("session in client", session?.user?.name);
   return (
     <div>
       <div>
-        <span>{session?.name}</span>
+        <span>{session?.user?.name}</span>
       </div>
     </div>
   );

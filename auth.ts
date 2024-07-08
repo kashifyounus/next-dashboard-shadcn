@@ -15,7 +15,7 @@ export const config = {
       },
       async authorize(credentials, req): Promise<any> {
         try {
-          const response = await axios.post("https://localhost:7092/login", {
+          const response = await axios.post(`${process.env.WEBAPI_BASE_PATH}/login`, {
             email: credentials.email, //"user@example.com",
             password: credentials.password, //"User@123",
           });
