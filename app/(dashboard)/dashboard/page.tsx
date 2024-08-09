@@ -18,12 +18,11 @@ export default function DashboardPage() {
           console.log(res);
         });
     };
-    fetchData();
+    //fetchData();
   }, []);
   return (
     <div className="">
       <div className={cn("flex items-center justify-center [&>div]:w-full")}>
-        <DemoCreateAccount />
         {/* {session?.user?.email} */}
       </div>
     </div>

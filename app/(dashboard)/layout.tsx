@@ -11,8 +11,8 @@ type Props = {
 
 const DashboardLayout = async ({ children }: Props) => {
   const session = await auth();
-  const data = await axiosInstance.get("https://localhost:7092/WeatherForecast");
-  console.log(data.data, "data.data");
+  //const data = await axiosInstance.get("https://localhost:7092/WeatherForecast");
+  //console.log(data.data, "data.data");
   return (
     <>
       <SessionProvider session={session}>

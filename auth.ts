@@ -15,8 +15,9 @@ export const config = {
       },
       async authorize(credentials, req): Promise<any> {
         try {
-          const response = await axios.post(`${process.env.WEBAPI_BASE_PATH}/login`, {
-            email: credentials.email, //"user@example.com",
+          const login_api_url = `${process.env.WEBAPI_BASE_PATH}/api/auth/login/?id=${49}&password=${'123123'}`;
+          const response = await axios.post(login_api_url, {
+            email : credentials.email, //"user@example.com",
             password: credentials.password, //"User@123",
           });
           //console.log("response.data", response.data);
@@ -24,6 +25,11 @@ export const config = {
           if (!user && !token) {
             return null;
           }
+          // return {
+          //   id: "1",
+          //   name: "test",
+          //   email: "test",
+          // };
           return response.data;
         } catch (error: any) {
           ///console.log("authorize error", error);
